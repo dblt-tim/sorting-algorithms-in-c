@@ -6,16 +6,18 @@
 #include "algos.h"
 
 int main() {
-    srand(time(NULL));
-    int a[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    srand(time(NULL)); // init random generator
+    
+    int a[10000];
+    for (int i = 0; i < 10000; i++) {
+        a[i] = i;
+    }
 
-    shuffle(a, 10);
+    shuffle(a, 10000);
 
-    for (int i = 0; i < 10; i++) printf("%d ", a[i]); printf("\n");
+    printf("%lf\n", measure_time(a, 10000, select_sort));
 
-    insertion_sort(a, 10);
-
-    for (int i = 0; i < 10; i++) printf("%d ", a[i]); printf("\n");
+    printf("%s", is_sorted(a, 10000) ? "true" : "false");
     
     return 0;
 }

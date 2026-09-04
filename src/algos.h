@@ -6,3 +6,9 @@ void bubble_sort(int* tab, size_t size);
 void select_sort(int* tab, size_t size);
 
 void insertion_sort(int* tab, size_t size);
+
+void quick_sort(int* tab, size_t size);
+
+void fusion_sort(int* tab, size_t size);
+
+void heap_sort(int* tab, size_t size);

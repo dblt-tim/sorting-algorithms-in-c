@@ -3,6 +3,8 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+// helper functions for the program
+
 void swap_values(int * val1, int * val2);
 
 void shuffle(int* array, size_t size);
