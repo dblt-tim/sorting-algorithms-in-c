@@ -100,9 +100,10 @@ void merge_sort(int* tab, size_t size)
     }
 
     size_t middle = size / 2;
-    merge_sort(tab, middle);
-    merge_sort(tab + middle, size - middle);
+    merge_sort(tab, middle); // sort left half
+    merge_sort(tab + middle, size - middle); // sort right half
 
+    // allocate and fill temporary lists
     int* left = malloc(sizeof(int) * middle);
     int* right = malloc(sizeof(int) * (size - middle));
 
@@ -113,23 +114,25 @@ void merge_sort(int* tab, size_t size)
         right[i] = (tab+middle)[i];
     }
 
+    // copy the pointers to walk them
     int* left_walker = left;
     int* right_walker = right;
 
     for (size_t i = 0; i < size; i++) {
-        if (left_walker >= left + middle) {
+        if (left_walker >= left + middle) { // if no more values in left
             tab[i] = *right_walker++;
             continue;
         }
-        if (right_walker >= right + size - middle) {
+        if (right_walker >= right + size - middle) { // if no more values in right
             tab[i] = *left_walker++;
             continue;
         }
-        if (*left_walker < *right_walker)
+        if (*left_walker < *right_walker) // last case
             tab[i] = *left_walker++;
         else tab[i] = *right_walker++;
     }
 
+    // free allocated arrays
     free(left);
     free(right);
 }
