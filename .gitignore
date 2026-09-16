@@ -1,3 +1,6 @@
 
 # cmake preference, I use build
 build
+
+# ignore my data
+data.csv

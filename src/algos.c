@@ -3,6 +3,8 @@
 #include "helpers.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void bubble_sort(int* tab, size_t size)
 {
@@ -57,12 +59,79 @@ void insertion_sort(int* tab, size_t size)
 
 void quick_sort(int* tab, size_t size)
 {
-    // TODO
+    // recursive break case
+    if (size == 1) return;
+    if (size <= 2) {
+        if (tab[1] < tab[0]) swap_values(tab, tab+1);
+        return;
+    }
+    
+    // choose pivot, arbitrary I'm taking the middle of the array
+    // and we put it in the end of the array
+    size_t index_pivot = size / 2;
+    int pivot = tab[index_pivot];
+
+    swap_values(tab + index_pivot, tab + size - 1);
+
+    // then partition the array to put all lesser values than the pivot to the left
+    size_t walker = 0;
+
+    for (size_t runner = 0; runner < size; runner++) {
+        if (tab[runner] < pivot) {
+            swap_values(tab + walker, tab + runner);
+            walker++;
+        }
+    }
+    // then we get the pivot back to where it should be
+    swap_values(tab + walker, tab + size - 1);
+
+    // then partition smaller portions of the array
+    quick_sort(tab, walker);
+    quick_sort(tab + walker + 1, size - walker - 1);
 }
 
-void fusion_sort(int* tab, size_t size)
+void merge_sort(int* tab, size_t size)
 {
-    // TODO
+    // recursive break case
+    if (size == 1) return;
+    if (size == 2) {
+        if (tab[0] > tab[1]) swap_values(tab, tab+1);
+        return;
+    }
+
+    size_t middle = size / 2;
+    merge_sort(tab, middle);
+    merge_sort(tab + middle, size - middle);
+
+    int* left = malloc(sizeof(int) * middle);
+    int* right = malloc(sizeof(int) * (size - middle));
+
+    for (int i = 0; i < middle; i++) {
+        left[i] = tab[i];
+    }
+    for (int i = 0; i < size - middle; i++) {
+        right[i] = (tab+middle)[i];
+    }
+
+    int* left_walker = left;
+    int* right_walker = right;
+
+    for (size_t i = 0; i < size; i++) {
+        if (left_walker >= left + middle) {
+            tab[i] = *right_walker++;
+            continue;
+        }
+        if (right_walker >= right + size - middle) {
+            tab[i] = *left_walker++;
+            continue;
+        }
+        if (*left_walker < *right_walker)
+            tab[i] = *left_walker++;
+        else tab[i] = *right_walker++;
+    }
+
+    free(left);
+    free(right);
 }
 
 void heap_sort(int* tab, size_t size)

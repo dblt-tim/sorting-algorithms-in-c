@@ -1,23 +1,41 @@
 
+#include "csv.h"
 #include "helpers.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "algos.h"
 
+#define N_TRIES 1 // average time on 20 tries for each algorithm
+
+#define N_EL_SIZE 4
+const int n_elements[] = {10, 100, 1000, 10000, 100000, 1000000};
+
+void(*algorithms[])(int*, size_t) = {
+    bubble_sort,
+    select_sort,
+    insertion_sort,
+    quick_sort,
+    merge_sort,
+    heap_sort
+};
+
 int main() {
     srand(time(NULL)); // init random generator
+
+    init_csv_writer("data.csv");
     
-    int a[10000];
-    for (int i = 0; i < 10000; i++) {
-        a[i] = i;
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < N_EL_SIZE; j++) {
+            for (int k = 0; k < N_TRIES; k++) {
+                int* array = malloc(sizeof(int)* n_elements[j]);
+                for (int l = 0; l < n_elements[j]; l++) array[l] = l+1;
+                shuffle(array, n_elements[j]);
+                append_line((ALG)i, n_elements[j], measure_time(array, n_elements[j], algorithms[i]));
+                free(array);
+            }
+        }
     }
-
-    shuffle(a, 10000);
-
-    printf("%lf\n", measure_time(a, 10000, select_sort));
-
-    printf("%s", is_sorted(a, 10000) ? "true" : "false");
-    
+    end_file_writer();
     return 0;
 }

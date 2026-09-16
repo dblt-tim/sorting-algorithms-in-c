@@ -2,6 +2,7 @@
 #include "helpers.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <time.h>
 
 void swap_values(int * val1, int * val2)
@@ -20,13 +21,18 @@ void shuffle(int* array, size_t size)
 
 double measure_time(int* array, size_t size, void(*alg)(int*,size_t))
 {
-    clock_t before = clock();
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_MONOTONIC, &start);
 
     alg(array, size);
 
-    clock_t delta = clock() - before;
+    clock_gettime(CLOCK_MONOTONIC, &end);
 
-    return ((double)delta / CLOCKS_PER_SEC);
+    
+    double elapsed = (end.tv_sec - start.tv_sec) +
+                      (end.tv_nsec - start.tv_nsec) / 1e9;
+    
 }
 
 bool is_sorted(int* tab, size_t size) {
@@ -34,4 +40,12 @@ bool is_sorted(int* tab, size_t size) {
         if (tab[i+1] < tab[i]) return false;
     }
     return true;
+}
+
+void print_list(int* tab, size_t size)
+{
+    printf("[");
+
+    for (int i = 0; i < size - 1; i++) printf("%d, ", tab[i]);
+    printf("%d]\n", tab[size-1]);
 }
