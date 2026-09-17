@@ -35,17 +35,17 @@ double measure_time(int* array, size_t size, void(*alg)(int*,size_t))
     
 }
 
-bool is_sorted(int* tab, size_t size) {
+bool is_sorted(int* arr, size_t size) {
     for (size_t i = 0; i < size-1; i++) {
-        if (tab[i+1] < tab[i]) return false;
+        if (arr[i+1] < arr[i]) return false;
     }
     return true;
 }
 
-void print_list(int* tab, size_t size)
+void print_list(int* arr, size_t size)
 {
     printf("[");
 
-    for (int i = 0; i < size - 1; i++) printf("%d, ", tab[i]);
-    printf("%d]\n", tab[size-1]);
+    for (int i = 0; i < size - 1; i++) printf("%d, ", arr[i]);
+    printf("%d]\n", arr[size-1]);
 }

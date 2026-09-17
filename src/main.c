@@ -6,11 +6,12 @@
 #include <time.h>
 #include "algos.h"
 
-#define N_TRIES 1 // average time on 20 tries for each algorithm
+#define N_TRIES 20 // to average time on N tries for each algorithm
 
 #define N_EL_SIZE 4
 const int n_elements[] = {10, 100, 1000, 10000, 100000, 1000000};
 
+#define N_ALGS 6
 void(*algorithms[])(int*, size_t) = {
     bubble_sort,
     select_sort,
@@ -25,7 +26,7 @@ int main() {
 
     init_csv_writer("data.csv");
     
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < N_ALGS; i++) {
         for (int j = 0; j < N_EL_SIZE; j++) {
             for (int k = 0; k < N_TRIES; k++) {
                 int* array = malloc(sizeof(int)* n_elements[j]);

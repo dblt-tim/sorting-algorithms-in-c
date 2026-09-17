@@ -11,6 +11,6 @@ void shuffle(int* array, size_t size);
 
 double measure_time(int* array, size_t size, void(*alg)(int*,size_t));
 
-bool is_sorted(int* tab, size_t size);
+bool is_sorted(int* arr, size_t size);
 
-void print_list(int* tab, size_t size);
+void print_list(int* arr, size_t size);
