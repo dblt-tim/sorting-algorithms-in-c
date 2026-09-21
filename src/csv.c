@@ -13,7 +13,7 @@ static const char* algs[] = {
     "heap_sort"
 };
 
-FILE* csv_file = NULL;
+static FILE* csv_file = NULL;
 
 void init_csv_writer(const char* filename) 
 {
